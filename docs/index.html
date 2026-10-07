@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data: blob:; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<title>RiseStake</title>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+background:linear-gradient(160deg,#0f0c29,#302b63,#24243e);color:#fff;
+width:1280px;height:720px;overflow:hidden;}
+.app{width:1280px;height:720px;display:flex;flex-direction:column;align-items:center;
+justify-content:center;box-sizing:border-box;padding:30px;}
+h1{margin:0;font-size:42px;letter-spacing:1px;}
+.tag{color:#a0a0d0;margin-bottom:20px;font-size:16px;}
+.card{background:#1b1740;border-radius:18px;padding:40px;width:560px;
+box-shadow:0 8px 24px rgba(0,0,0,0.4);text-align:center;}
+.btn{background:#7b5cff;color:#fff;border:none;padding:14px 28px;border-radius:10px;
+font-size:16px;margin-top:16px;cursor:pointer;transition:background .2s;}
+.btn:hover{background:#9a82ff;}
+.btn2{background:#2d2a5e;}
+.status{margin-top:18px;font-size:16px;color:#c9c6ff;}
+.hidden{display:none;}
+.bar-bg{background:#2d2a5e;border-radius:8px;height:22px;width:100%;margin:20px 0;overflow:hidden;}
+.bar-fill{background:#3ee07a;height:100%;width:0%;transition:width .4s;}
+.success{background:#1e3a2e;border:1px solid #3ee07a;border-radius:12px;padding:20px;margin-top:20px;}
+.leader{background:#1e1a44;border-radius:12px;padding:20px;margin-top:20px;text-align:left;}
+.leader div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #322e66;font-size:14px;}
+footer{position:fixed;bottom:10px;width:100%;text-align:center;color:#6c6a9a;font-size:12px;}
+.alarm{font-size:30px;color:#ff6b6b;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="app" data-demo="app">
+  <h1>RiseStake</h1>
+  <div class="tag">Stake crypto, shake your phone for 60 seconds, wake up or lose it</div>
+
+  <div id="view-stake" data-demo="view-stake" class="card">
+    <p>Tonight's Alarm: 7:00 AM</p>
+    <p>Stake Amount: 0.5 SOL</p>
+    <button class="btn" data-demo="btn-stake" onclick="doStake()">Connect Wallet & Stake 0.5 SOL</button>
+    <div class="status" data-demo="stake-status">No wallet connected</div>
+    <button class="btn btn2" data-demo="btn-set-alarm" onclick="setAlarm()">Set Alarm for 7:00 AM</button>
+  </div>
+
+  <div id="view-alarm" data-demo="view-alarm" class="card hidden">
+    <div class="alarm">⏰ ALARM RINGING</div>
+    <p>Shake your phone to disarm (60s challenge)</p>
+    <div class="bar-bg"><div class="bar-fill" data-demo="progress-bar"></div></div>
+    <div data-demo="shake-count">0 / 40 shakes</div>
+    <button class="btn" data-demo="btn-shake" onclick="doShake()">Shake Now!</button>
+    <div id="success-panel" data-demo="success-panel" class="success hidden">
+      ✅ Challenge Complete!<br>Alarm disarmed.<br>+0.15 SOL reward added.<br>Streak: 6 days 🔥
+    </div>
+    <button class="btn btn2" data-demo="btn-leaderboard" onclick="toggleLeaderboard()">View Leaderboard</button>
+    <div id="leaderboard-panel" data-demo="leaderboard-panel" class="leader hidden">
+      <div><span>🥇 alex.sol</span><span>12 day streak</span></div>
+      <div><span>🥈 maya.sol</span><span>9 day streak</span></div>
+      <div><span>🥉 you</span><span>6 day streak</span></div>
+    </div>
+  </div>
+</div>
+<footer>Prototype — all data is simulated</footer>
+
+<script>
+function doStake(){
+  document.querySelector('[data-demo="stake-status"]').innerText = "✅ 0.5 SOL Staked — Wallet Connected";
+}
+function setAlarm(){
+  document.getElementById('view-stake').classList.add('hidden');
+  document.getElementById('view-alarm').classList.remove('hidden');
+}
+function doShake(){
+  document.querySelector('[data-demo="progress-bar"]').style.width = "100%";
+  document.querySelector('[data-demo="shake-count"]').innerText = "40 / 40 shakes ✅";
+  document.getElementById('success-panel').classList.remove('hidden');
+}
+function toggleLeaderboard(){
+  document.getElementById('leaderboard-panel').classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
